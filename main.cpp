@@ -7,24 +7,6 @@
 #include <chrono>
 using namespace std;
 
-// GLOBAL VARS
-// -----------
-string position;
-int depth;
-string player;
-int use_thresh;
-int pass_thresh;
-
-int EVAL_MAX = 100;
-int EVAL_MIN = -100;
-int VALUE;
-int NEW_VALUE;
-
-string PATH;
-string BEST_PATH;
-string SUCCESSORS;
-string RESULT_SUCC;
-
 // FUNCTION DEFINITIONS
 // -----------------------
 
@@ -36,7 +18,7 @@ void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int
 
 // EVALUATION(position, player) - Return a number that represents a the goodness of players position
 
-void OPPOSITE_PLAYER();
+string OPPOSITE_PLAYER(string this_player);
 
 // --------------------------------------
 
@@ -44,9 +26,9 @@ void OPPOSITE_PLAYER();
 // -----
 
 int main(){
-    player = "MAX";
-    MINI_MAX_A_B("CURRENT", 0, player, EVAL_MAX, EVAL_MIN);
-    cout << player << endl;
+    int EVAL_MAX = 100;
+    int EVAL_MIN = -100;
+    MINI_MAX_A_B("CURRENT POSITION", 0, "MAX", EVAL_MAX, EVAL_MIN);
     return 0;
 }
 
@@ -57,6 +39,18 @@ int main(){
 
 void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int pass_thresh){
 
+    // Function Vars
+    int VALUE;
+    int NEW_VALUE;
+
+    string PATH;
+    string BEST_PATH;
+    string SUCCESSORS;
+    string RESULT_SUCC;
+    // ----------------
+
+    // IMPLEMENTATION
+    // --------------
     // If deep enough, return structure
         // VALUE = EVALUATION(position, player);
         // PATH = null;
@@ -78,17 +72,21 @@ void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
-    OPPOSITE_PLAYER();
+    player = OPPOSITE_PLAYER(player);
+    cout << player << endl;
 };
 
-void OPPOSITE_PLAYER(){
-    if (player == "MAX") {
-        player = "MIN";
+string OPPOSITE_PLAYER(string this_player){
+    string new_player;
+    if (this_player == "MAX") {
+        new_player = "MIN";
         }
-    else if (player == "MIN") {
-        player = "MAX";
+    else if (this_player == "MIN") {
+        new_player = "MAX";
         }
     else {
         cout << "OPPOSITE() experienced an error...";
+        new_player = this_player;
     }
+    return new_player;
 }
