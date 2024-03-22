@@ -20,12 +20,12 @@ int EVAL_MIN = -100;
 int VALUE;
 int NEW_VALUE;
 
-string PATH[];
-string BEST_PATH[];
-string SUCCESSORS[];
-string RESULT_SUCC[];
+string PATH;
+string BEST_PATH;
+string SUCCESSORS;
+string RESULT_SUCC;
 
-// FUNCTIONS TO BE DEFINED
+// FUNCTION DEFINITIONS
 // -----------------------
 
 void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int pass_thresh); // - AB Pruning, select optimal path.
@@ -36,13 +36,24 @@ void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int
 
 // EVALUATION(position, player) - Return a number that represents a the goodness of players position
 
-// OPPOSITE(player) - change player turn.
+void OPPOSITE_PLAYER();
+
+// --------------------------------------
+
+// MAIN
+// -----
 
 int main(){
-    MINI_MAX_A_B("CURRENT", 0, "MAX", EVAL_MAX, EVAL_MIN);
+    player = "MAX";
+    MINI_MAX_A_B("CURRENT", 0, player, EVAL_MAX, EVAL_MIN);
+    cout << player << endl;
     return 0;
 }
 
+// --------------------------------------
+
+// FUNCTION IMPLEMENTATIONS
+// --------------------------------------
 
 void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int pass_thresh){
 
@@ -67,4 +78,17 @@ void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
+    OPPOSITE_PLAYER();
 };
+
+void OPPOSITE_PLAYER(){
+    if (player == "MAX") {
+        player = "MIN";
+        }
+    else if (player == "MIN") {
+        player = "MAX";
+        }
+    else {
+        cout << "OPPOSITE() experienced an error...";
+    }
+}
