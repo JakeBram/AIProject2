@@ -5,6 +5,7 @@
 #include <stack>
 #include <fstream>
 #include <chrono>
+#include <list>
 using namespace std;
 
 // FUNCTION DEFINITIONS
@@ -21,6 +22,9 @@ int* MOVEGEN(int position[9], string player); // - Generate all moves that could
 string OPPOSITE_PLAYER(string this_player);
 
 // --------------------------------------
+struct board_position {
+    int board[9];
+};
 
 // MAIN
 // -----
@@ -65,6 +69,13 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     int possible_moves = ptr[idx];
     idx++;
     // For possible moves, create boards as arrays, set them to SUCCESSORS
+    list<board_position> move_list;
+    board_position example;
+    for(int i = 0; i < 9; i++){
+        example.board[i] = 1;
+    }
+    move_list.push_back(example);
+    cout << move_list.size(); // move_list -> SUCCESSORS
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
@@ -91,7 +102,7 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
 };
 
 int* MOVEGEN(int position[9], string player){
-    int possible_moves[10];
+    static int possible_moves[10];
     int player_id = 0;
     if(player == "MAX") {
         player_id = 1;
