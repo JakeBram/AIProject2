@@ -12,9 +12,9 @@ using namespace std;
 
 void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int pass_thresh); // - AB Pruning, select optimal path.
 
-// MOVEGEN(position, player) - Generate all moves that could be made
+int* MOVEGEN(int position[9], string player); // - Generate all moves that could be made
 
-// DEEP-ENOUGH(postition, depth) - Has someone won? How many ply have been explored? How promising is this path?
+// DEEP-ENOUGH(postition, depth) - Has someone won? How many ply have been explored? 
 
 // EVALUATION(position, player) - Return a number that represents a the goodness of players position
 
@@ -26,6 +26,7 @@ string OPPOSITE_PLAYER(string this_player);
 // -----
 
 int main(){
+    // Initialize a list to represent game board, "CURRENT POSITION"
     int EVAL_MAX = 100;
     int EVAL_MIN = -100;
     MINI_MAX_A_B("CURRENT POSITION", 0, "MAX", EVAL_MAX, EVAL_MIN);
@@ -72,9 +73,34 @@ void MINI_MAX_A_B(string position, int depth, string player, int use_thresh, int
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
-    player = OPPOSITE_PLAYER(player);
-    cout << player << endl;
+
+    // TESTING: OPPOSITE PLAYER() - COMPLETE 
+    // player = OPPOSITE_PLAYER(player);
+    // cout << player << endl;
+
+
 };
+
+int* MOVEGEN(int position[9], string player){
+    int possible_moves[9];
+    int player_id = 0;
+    if(player == "MAX") {
+        player_id = 1;
+    }
+    else {
+        player_id = 2;
+    }
+    int i = 0;
+    for (int idx = 0; idx < 9; idx++){
+        if(position[idx] == -1){
+            possible_moves[i] = idx;
+            i++;
+        }
+    }
+
+    // int new_position[9]
+    // for possible moves, create new positions, return.
+}
 
 string OPPOSITE_PLAYER(string this_player){
     string new_player;
