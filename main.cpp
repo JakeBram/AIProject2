@@ -57,28 +57,29 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
         // PATH = null;
 
     // Else, SUCCESSORS = MOVEGEN(position, player); (IN PROGRESS)
-
     int* ptr;
     ptr = MOVEGEN(position, player);
     int idx = 0;
     int possible_moves;
     possible_moves = ptr[idx];
-    cout << "Possible Moves: " << possible_moves << endl;
+    cout << "Possible Moves: " << possible_moves << "\n" << endl;
     // For possible moves, create boards as arrays, set them to SUCCESSORS
-    for(int i = 0; i < (possible_moves*9)+1; i++){
-        cout << "ptr[" << i << "]: " << ptr[i] << endl;
+    int read_in_test[82];
+    int curr_sqaure = 0;
+    int this_board[9] = {0,0,0,0,0,0,0,0,0};
+    for(int i = 1; i < (possible_moves*9)+1; i++){
+        this_board[curr_sqaure] = ptr[i];
+        cout << "Memory[" << i << "]: " << this_board[curr_sqaure] << endl;
         if(i % 9 == 0){
-            cout << "\n";
+            curr_sqaure = 0;
+            cout << "Board " << i / 9 << "\n\n";
+            // SUCCESSORS.push_back(this_board);
+            int this_board[9] = {0,0,0,0,0,0,0,0,0};
+        }
+        else{
+            curr_sqaure++;
         }
     }
-
-    // board_position example;
-    // for(int i = 0; i < 9; i++){
-    //     example.board[i] = 1;                
-    // }
-    // move_list.push_back(example);
-    // cout << move_list.size();                move_list -> SUCCESSORS
-
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
@@ -96,11 +97,6 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
-
-    // TESTING: OPPOSITE PLAYER() - COMPLETE 
-    // player = OPPOSITE_PLAYER(player);
-    // cout << player << endl;
-
 
 };
 
