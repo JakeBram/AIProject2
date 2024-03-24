@@ -45,10 +45,8 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     // Function Vars
     int VALUE;
     int NEW_VALUE;
-
     string PATH;
     string BEST_PATH;
-    string SUCCESSORS;
     string RESULT_SUCC;
     // ----------------
 
@@ -63,15 +61,16 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     int* ptr;
     ptr = MOVEGEN(position, player);
     int idx = 0;
-    int possible_moves = ptr[idx];
+    int possible_moves;
+    possible_moves = ptr[idx];
     cout << "Possible Moves: " << possible_moves << endl;
-    cout << "ptr[1]: " << ptr[1] << endl;
-    cout << "ptr[2]: " << ptr[2] << endl;
-    cout << "ptr[80]: " << ptr[80] << endl;
-    cout << "ptr[81]: " << ptr[81] << endl;
-    idx++;
-
     // For possible moves, create boards as arrays, set them to SUCCESSORS
+    for(int i = 0; i < (possible_moves*9)+1; i++){
+        cout << "ptr[" << i << "]: " << ptr[i] << endl;
+        if(i % 9 == 0){
+            cout << "\n";
+        }
+    }
 
     // board_position example;
     // for(int i = 0; i < 9; i++){
@@ -116,6 +115,7 @@ int* MOVEGEN(int position[9], string player){
         player_id = 2;
     }
     int i = 0;
+
     for (int idx = 0; idx < 9; idx++){
         if(position[idx] == 0){
             possible_moves[i + 1] = idx;
@@ -126,6 +126,7 @@ int* MOVEGEN(int position[9], string player){
 
     static int possible_boards[82]; // GENERATE EACH POSSIBLE BOARD PER MOVE
     int possible_move_num = possible_moves[0];
+    possible_boards[0] = possible_move_num;
     i = 1;
     int array_idx = 1;
     int this_board[9];
