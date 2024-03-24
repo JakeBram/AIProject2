@@ -22,9 +22,6 @@ int* MOVEGEN(int position[9], string player); // - Generate all moves that could
 string OPPOSITE_PLAYER(string this_player);
 
 // --------------------------------------
-struct board_position {
-    int board[9];
-};
 
 // MAIN
 // -----
@@ -67,15 +64,22 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     ptr = MOVEGEN(position, player);
     int idx = 0;
     int possible_moves = ptr[idx];
+    cout << "Possible Moves: " << possible_moves << endl;
+    cout << "ptr[1]: " << ptr[1] << endl;
+    cout << "ptr[2]: " << ptr[2] << endl;
+    cout << "ptr[80]: " << ptr[80] << endl;
+    cout << "ptr[81]: " << ptr[81] << endl;
     idx++;
+
     // For possible moves, create boards as arrays, set them to SUCCESSORS
-    list<board_position> move_list;
-    board_position example;
-    for(int i = 0; i < 9; i++){
-        example.board[i] = 1;
-    }
-    move_list.push_back(example);
-    cout << move_list.size(); // move_list -> SUCCESSORS
+
+    // board_position example;
+    // for(int i = 0; i < 9; i++){
+    //     example.board[i] = 1;                
+    // }
+    // move_list.push_back(example);
+    // cout << move_list.size();                move_list -> SUCCESSORS
+
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
@@ -102,7 +106,8 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
 };
 
 int* MOVEGEN(int position[9], string player){
-    static int possible_moves[10];
+
+    static int possible_moves[10]; // DETERMINE WHOSE TURN, NUM OF POSSIBLE MOVES
     int player_id = 0;
     if(player == "MAX") {
         player_id = 1;
@@ -110,18 +115,42 @@ int* MOVEGEN(int position[9], string player){
     else {
         player_id = 2;
     }
-    int i = 1;
+    int i = 0;
     for (int idx = 0; idx < 9; idx++){
-        if(position[idx] == -1){
+        if(position[idx] == 0){
             possible_moves[i + 1] = idx;
             i++;
         }
     }
-    possible_moves[0] = i;
-    return possible_moves; 
+    possible_moves[0] = i; // STORE MOVE COUNT AND POSSIBLE MOVE IDX'S HERE
+
+    static int possible_boards[82]; // GENERATE EACH POSSIBLE BOARD PER MOVE
+    int possible_move_num = possible_moves[0];
+    i = 1;
+    int array_idx = 1;
+    int this_board[9];
+    int this_move;
+    while(i <= possible_move_num){
+
+        for(int inner_idx = 0; inner_idx < 9; inner_idx++){ // DUPLICATE POSITION
+            this_board[inner_idx] = position[inner_idx];
+        }
+        this_move = possible_moves[i];
+        this_board[this_move] = player_id; // PLAY POSSIBLE MOVE ON DUPLICATE BOARD
+
+        // ADD DUPLICATE BOARD WITH MOVE TO possible_boards[]
+        for(int idx = 0; idx < 9; idx++){
+            possible_boards[array_idx] = this_board[idx];
+            array_idx++;
+        }
+
+        i++; // WE HAVE PROCESSED ONE MOVE, NEXT
+    }
+
+    int* possible_moves_ptr = possible_boards;
+    return possible_moves_ptr; 
     // Returns a POINTER. possible_moves[0] is the total num of possible moves.
     // Everything after is sqaures the player can play in.
-
 }
 
 string OPPOSITE_PLAYER(string this_player){
