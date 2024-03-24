@@ -23,6 +23,10 @@ string OPPOSITE_PLAYER(string this_player);
 
 // --------------------------------------
 
+struct board{
+    int positions[9];
+};
+
 // MAIN
 // -----
 
@@ -66,20 +70,22 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     // For possible moves, create boards as arrays, set them to SUCCESSORS
     int read_in_test[82];
     int curr_sqaure = 0;
-    int this_board[9] = {0,0,0,0,0,0,0,0,0};
+    board this_board;
+    list<board> SUCCESSORS;
     for(int i = 1; i < (possible_moves*9)+1; i++){
-        this_board[curr_sqaure] = ptr[i];
-        cout << "Memory[" << i << "]: " << this_board[curr_sqaure] << endl;
+        this_board.positions[curr_sqaure] = ptr[i];
+        cout << "Memory[" << i << "]: " << this_board.positions[curr_sqaure] << endl;
         if(i % 9 == 0){
             curr_sqaure = 0;
             cout << "Board " << i / 9 << "\n\n";
-            // SUCCESSORS.push_back(this_board);
+            SUCCESSORS.push_back(this_board);
             int this_board[9] = {0,0,0,0,0,0,0,0,0};
         }
         else{
             curr_sqaure++;
         }
     }
+    cout << "SUCCESSORS size: " << SUCCESSORS.size() << endl;
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
