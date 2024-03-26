@@ -189,6 +189,16 @@ bool DEEP_ENOUGH(int position[9], int depth){
     if(depth == 9){
         return true;
     }
+
+    if(position[0] == position[1] == position[2]) { return true;} // Is the game won.
+    if(position[0] == position[3] == position[6]) { return true;}
+    if(position[3] == position[4] == position[5]) { return true;}
+    if(position[6] == position[7] == position[8]) { return true;}
+    if(position[1] == position[4] == position[7]) { return true;}
+    if(position[2] == position[5] == position[8]) { return true;}
+    if(position[0] == position[4] == position[8]) { return true;}
+    if(position[2] == position[4] == position[6]) { return true;}
+
     if(moves == 0){
         return true;
     }
