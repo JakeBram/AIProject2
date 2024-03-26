@@ -15,7 +15,7 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
 
 int* MOVEGEN(int position[9], string player); // - Generate all moves that could be made
 
-// DEEP-ENOUGH(postition, depth) - Has someone won? How many ply have been explored? 
+bool DEEP_ENOUGH(int postition[9], int depth); // - Has someone won? How many ply have been explored? 
 
 // EVALUATION(position, player) - Return a number that represents a the goodness of players position
 
@@ -35,7 +35,12 @@ int main(){
     int EVAL_MAX = 100;
     int EVAL_MIN = -100;
     int position[9] = {0,0,0,0,0,0,0,0,0};
-    MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
+    int position2[9] = {1,1,1,1,1,1,1,1,1};
+    // MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
+    cout << "Test 1: " << DEEP_ENOUGH(position, 0) << endl;
+    cout << "Test 2: " << DEEP_ENOUGH(position2, 9) << endl;
+    cout << "Test 3: " << DEEP_ENOUGH(position, 9) << endl;
+    cout << "Test 4: " << DEEP_ENOUGH(position2, 0) << endl;
     return 0;
 }
 
@@ -169,4 +174,24 @@ string OPPOSITE_PLAYER(string this_player){
         new_player = this_player;
     }
     return new_player;
+}
+
+bool DEEP_ENOUGH(int position[9], int depth){
+    int i = 0;
+    int moves = 0;
+    while(i < 8){
+        if(position[i] == 0){
+            return false;
+            moves++;
+        }
+        i++;
+    }
+    if(depth == 9){
+        return true;
+    }
+    if(moves == 0){
+        return true;
+    }
+
+    return false;
 }
