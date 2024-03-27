@@ -34,23 +34,19 @@ string OPPOSITE_PLAYER(string this_player);
 // -----
 
 int main(){
-    // Initialize a list to represent game board, "CURRENT POSITION"
-    int EVAL_MAX = 100;
+    int EVAL_MAX = 100; 
     int EVAL_MIN = -100;
     board position;
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
-    // int position2[9] = {1,1,1,1,1,1,1,1,1};
+
     board final = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
     cout << "Response Board: ";
     for (int i = 0; i < 9; i++){
         cout << final.positions[i] << ", ";
     }
-    // cout << "Test 1: " << DEEP_ENOUGH(position, 0) << endl;
-    // cout << "Test 2: " << DEEP_ENOUGH(position2, 9) << endl;
-    // cout << "Test 3: " << DEEP_ENOUGH(position, 9) << endl;
-    // cout << "Test 4: " << DEEP_ENOUGH(position2, 0) << endl;
+
     return 0;
 }
 
@@ -87,10 +83,9 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
     list<board> SUCCESSORS;
     for(int i = 1; i < (possible_moves*9)+1; i++){
         this_board.positions[curr_sqaure] = ptr[i];
-        cout << "Memory[" << i << "]: " << this_board.positions[curr_sqaure] << endl;
         if(i % 9 == 0){
             curr_sqaure = 0;
-            cout << "Board " << i / 9 << "\n\n";
+
             SUCCESSORS.push_back(this_board);
             int this_board[9] = {0,0,0,0,0,0,0,0,0};
         }
@@ -98,8 +93,6 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
             curr_sqaure++;
         }
     }
-    // cout << "SUCCESSORS size: " << SUCCESSORS.size() << endl;
-    board first_child = SUCCESSORS.front();
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
@@ -117,7 +110,8 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
-    board PATH = first_child;
+
+    board first_child = SUCCESSORS.front();
     return first_child; 
 };
 
