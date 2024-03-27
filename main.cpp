@@ -17,7 +17,8 @@ struct board{
 // FUNCTION DEFINITIONS
 // -----------------------
 
-board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh); // - AB Pruning, select optimal path.
+board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh);
+// To select an optimal move. We will loop and call this for min and max until game is won.
 
 int* MOVEGEN(board state, string player); // - Generate all moves that could be made
 
@@ -55,7 +56,7 @@ int main(){
 // FUNCTION IMPLEMENTATIONS
 // --------------------------------------
 
-board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){
+board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move
 
     // Function Vars
     int VALUE;
