@@ -8,14 +8,20 @@
 #include <list>
 using namespace std;
 
+// BOARD STRUCT DEFINITION
+// -----------------------
+struct board{
+    int positions[9];
+};
+
 // FUNCTION DEFINITIONS
 // -----------------------
 
-void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int pass_thresh); // - AB Pruning, select optimal path.
+board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh); // - AB Pruning, select optimal path.
 
-int* MOVEGEN(int position[9], string player); // - Generate all moves that could be made
+int* MOVEGEN(board state, string player); // - Generate all moves that could be made
 
-bool DEEP_ENOUGH(int postition[9], int depth); // - Has someone won? How many ply have been explored? 
+bool DEEP_ENOUGH(board state, int depth); // - Has someone won? How many ply have been explored? 
 
 // EVALUATION(position, player) - Return a number that represents a the goodness of players position
 
@@ -23,9 +29,6 @@ string OPPOSITE_PLAYER(string this_player);
 
 // --------------------------------------
 
-struct board{
-    int positions[9];
-};
 
 // MAIN
 // -----
@@ -34,13 +37,20 @@ int main(){
     // Initialize a list to represent game board, "CURRENT POSITION"
     int EVAL_MAX = 100;
     int EVAL_MIN = -100;
-    int position[9] = {0,0,0,0,0,0,0,0,0};
-    int position2[9] = {1,1,1,1,1,1,1,1,1};
-    // MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
-    cout << "Test 1: " << DEEP_ENOUGH(position, 0) << endl;
-    cout << "Test 2: " << DEEP_ENOUGH(position2, 9) << endl;
-    cout << "Test 3: " << DEEP_ENOUGH(position, 9) << endl;
-    cout << "Test 4: " << DEEP_ENOUGH(position2, 0) << endl;
+    board position;
+    for(int i = 0; i < 9; i++){
+        position.positions[i] = 0;
+    }
+    // int position2[9] = {1,1,1,1,1,1,1,1,1};
+    board final = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
+    cout << "Response Board: ";
+    for (int i = 0; i < 9; i++){
+        cout << final.positions[i] << ", ";
+    }
+    // cout << "Test 1: " << DEEP_ENOUGH(position, 0) << endl;
+    // cout << "Test 2: " << DEEP_ENOUGH(position2, 9) << endl;
+    // cout << "Test 3: " << DEEP_ENOUGH(position, 9) << endl;
+    // cout << "Test 4: " << DEEP_ENOUGH(position2, 0) << endl;
     return 0;
 }
 
@@ -49,12 +59,10 @@ int main(){
 // FUNCTION IMPLEMENTATIONS
 // --------------------------------------
 
-void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int pass_thresh){
+board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){
 
     // Function Vars
     int VALUE;
-    int NEW_VALUE;
-    string PATH;
     string BEST_PATH;
     string RESULT_SUCC;
     // ----------------
@@ -65,9 +73,9 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
         // VALUE = EVALUATION(position, player);
         // PATH = null;
 
-    // Else, SUCCESSORS = MOVEGEN(position, player); (IN PROGRESS)
+    // Else, SUCCESSORS = MOVEGEN(position, player);
     int* ptr;
-    ptr = MOVEGEN(position, player);
+    ptr = MOVEGEN(state, player);
     int idx = 0;
     int possible_moves;
     possible_moves = ptr[idx];
@@ -90,7 +98,8 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
             curr_sqaure++;
         }
     }
-    cout << "SUCCESSORS size: " << SUCCESSORS.size() << endl;
+    // cout << "SUCCESSORS size: " << SUCCESSORS.size() << endl;
+    board first_child = SUCCESSORS.front();
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
@@ -108,10 +117,11 @@ void MINI_MAX_A_B(int position[9], int depth, string player, int use_thresh, int
     // Return the structure
     // VALUE = pass_thresh;
     // PATH = BEST_PATH;
-
+    board PATH = first_child;
+    return first_child; 
 };
 
-int* MOVEGEN(int position[9], string player){
+int* MOVEGEN(board state, string player){
 
     static int possible_moves[10]; // DETERMINE WHOSE TURN, NUM OF POSSIBLE MOVES
     int player_id = 0;
@@ -124,7 +134,7 @@ int* MOVEGEN(int position[9], string player){
     int i = 0;
 
     for (int idx = 0; idx < 9; idx++){
-        if(position[idx] == 0){
+        if(state.positions[idx] == 0){
             possible_moves[i + 1] = idx;
             i++;
         }
@@ -141,7 +151,7 @@ int* MOVEGEN(int position[9], string player){
     while(i <= possible_move_num){
 
         for(int inner_idx = 0; inner_idx < 9; inner_idx++){ // DUPLICATE POSITION
-            this_board[inner_idx] = position[inner_idx];
+            this_board[inner_idx] = state.positions[inner_idx];
         }
         this_move = possible_moves[i];
         this_board[this_move] = player_id; // PLAY POSSIBLE MOVE ON DUPLICATE BOARD
@@ -176,11 +186,11 @@ string OPPOSITE_PLAYER(string this_player){
     return new_player;
 }
 
-bool DEEP_ENOUGH(int position[9], int depth){
+bool DEEP_ENOUGH(board state, int depth){
     int i = 0;
     int moves = 0;
-    while(i < 8){
-        if(position[i] == 0){
+    while(i < 9){
+        if(state.positions[i] == 0){
             return false;
             moves++;
         }
@@ -190,14 +200,14 @@ bool DEEP_ENOUGH(int position[9], int depth){
         return true;
     }
 
-    if(position[0] == position[1] == position[2]) { return true;} // Is the game won.
-    if(position[0] == position[3] == position[6]) { return true;}
-    if(position[3] == position[4] == position[5]) { return true;}
-    if(position[6] == position[7] == position[8]) { return true;}
-    if(position[1] == position[4] == position[7]) { return true;}
-    if(position[2] == position[5] == position[8]) { return true;}
-    if(position[0] == position[4] == position[8]) { return true;}
-    if(position[2] == position[4] == position[6]) { return true;}
+    if(state.positions[0] == state.positions[1] == state.positions[2]) { return true;} // Is the game won.
+    if(state.positions[0] == state.positions[3] == state.positions[6]) { return true;}
+    if(state.positions[3] == state.positions[4] == state.positions[5]) { return true;}
+    if(state.positions[6] == state.positions[7] == state.positions[8]) { return true;}
+    if(state.positions[1] == state.positions[4] == state.positions[7]) { return true;}
+    if(state.positions[2] == state.positions[5] == state.positions[8]) { return true;}
+    if(state.positions[0] == state.positions[4] == state.positions[8]) { return true;}
+    if(state.positions[2] == state.positions[4] == state.positions[6]) { return true;}
 
     if(moves == 0){
         return true;
