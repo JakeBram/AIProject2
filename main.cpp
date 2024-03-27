@@ -24,7 +24,8 @@ int* MOVEGEN(board state, string player); // - Generate all moves that could be 
 
 bool DEEP_ENOUGH(board state, int depth); // - Has someone won? How many ply have been explored? 
 
-// EVALUATION(position, player) - Return a number that represents a the goodness of players position
+int EVALUATION(board position, string player); // - Return a number that represents a the goodness of players position
+// We need four EVALUATION functions. One was given in slides. We must create 3 more.
 
 string OPPOSITE_PLAYER(string this_player);
 
@@ -208,4 +209,10 @@ bool DEEP_ENOUGH(board state, int depth){
     }
 
     return false;
+}
+
+int EVALUATION(board state, string player){ // Implementing the given Evaluation function
+    int VALUE = 0;
+    // VALUE = WIN_PATHS_STATE - OPPONENT_WIN_PATHS; // SEE SLIDES FOR EXAMPLE
+    return 0;
 }
