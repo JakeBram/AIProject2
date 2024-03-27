@@ -34,9 +34,9 @@ string OPPOSITE_PLAYER(string this_player);
 // -----
 
 int main(){
-    int EVAL_MAX = 100; 
-    int EVAL_MIN = -100;
-    board position;
+    int EVAL_MAX = 100; // THESE DEPEND ON THE EVAL FUNCTION
+    int EVAL_MIN = -100; // WE WILL USE 100 FOR NOW
+    board position; // BLANK BOARD STATE FOR NEW GAME
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
@@ -45,7 +45,7 @@ int main(){
     cout << "Response Board: ";
     for (int i = 0; i < 9; i++){
         cout << final.positions[i] << ", ";
-    }
+    } // TEST RESPONSE FROM MINI_MAX_A_B
 
     return 0;
 }
