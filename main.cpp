@@ -76,7 +76,6 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
     int idx = 0;
     int possible_moves;
     possible_moves = ptr[idx];
-    cout << "Possible Moves: " << possible_moves << "\n" << endl;
     // For possible moves, create boards as arrays, set them to SUCCESSORS
     int read_in_test[82];
     int curr_sqaure = 0;
