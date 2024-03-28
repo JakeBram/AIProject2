@@ -2,8 +2,8 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-#include <stack>
 #include <list>
+
 #include "board.h"
 using namespace std;
 

@@ -2,8 +2,8 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-#include <stack>
 #include <list>
+
 #include "hfiles/board.h"
 #include "hfiles/minimax.h"
 #include "hfiles/movegen.h"

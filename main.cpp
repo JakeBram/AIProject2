@@ -2,7 +2,6 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-#include <stack>
 #include <list>
 
 #include "hfiles/board.h"
