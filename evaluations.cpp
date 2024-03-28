@@ -46,3 +46,8 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
     VALUE = WINNING - LOSING; // Evaluate the state based on possible winning lines.
     return VALUE;
 }
+
+int EVAL_2(board position, string player){
+    int VALUE = 99;
+    return VALUE;
+}

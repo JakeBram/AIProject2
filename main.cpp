@@ -30,6 +30,7 @@ int main(){
     cout << "EVALUATION - blank board, MIN: " << EVALUATION(position, "MIN") << endl;
     cout << "EVALUATION - response board, MAX: " << EVALUATION(final, "MAX") << endl;
     cout << "EVALUATION - response board, MIN: " << EVALUATION(position, "MIN") << endl; // EVALUATION TESTING
+    cout << "EVALUATION 2: " << EVAL_2(position, "MAX") << endl;
 
     cout << "DEEP ENOUGH? - " << DEEP_ENOUGH(final, 1) << endl;
     return 0;
