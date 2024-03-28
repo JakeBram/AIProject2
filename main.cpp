@@ -42,10 +42,15 @@ int main(){
     }
 
     board final = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
-    cout << "Response Board: ";
-    for (int i = 0; i < 9; i++){
-        cout << final.positions[i] << ", ";
-    } // TEST RESPONSE FROM MINI_MAX_A_B
+    //cout << "Response Board: ";
+    //for (int i = 0; i < 9; i++){
+       // cout << final.positions[i] << ", ";
+    //} // TEST RESPONSE FROM MINI_MAX_A_B
+
+    cout << "EVALUATION - blank board, MAX: " << EVALUATION(position, "MAX") << endl;
+    cout << "EVALUATION - blank board, MIN: " << EVALUATION(position, "MIN") << endl;
+    cout << "EVALUATION - response board, MAX: " << EVALUATION(final, "MAX") << endl;
+    cout << "EVALUATION - response board, MIN: " << EVALUATION(position, "MIN") << endl;
 
     return 0;
 }
@@ -210,7 +215,38 @@ bool DEEP_ENOUGH(board state, int depth){
 }
 
 int EVALUATION(board state, string player){ // Implementing the given Evaluation function
+    int player_id;
+    int opposite_id;
+    if(player == "MAX") {
+        player_id = 1;
+        opposite_id = 2;
+    }
+    else if(player == "MIN") {
+        player_id = 2;
+        opposite_id = 1;
+    }
     int VALUE = 0;
-    // VALUE = WIN_PATHS_STATE - OPPONENT_WIN_PATHS; // SEE SLIDES FOR EXAMPLE
-    return 0;
+    int WINNING = 0;
+    int LOSING = 0;
+
+    if(state.positions[0] != opposite_id && state.positions[1] != opposite_id && state.positions[2]  != opposite_id) {WINNING++;} 
+    if(state.positions[0] != opposite_id && state.positions[3] != opposite_id && state.positions[6]  != opposite_id) {WINNING++;}
+    if((state.positions[3] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[5]  != opposite_id)) {WINNING++;}
+    if((state.positions[6] != opposite_id) && (state.positions[7] != opposite_id) && (state.positions[8]  != opposite_id)) {WINNING++;}
+    if((state.positions[1] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[7]  != opposite_id)) {WINNING++;}
+    if((state.positions[2] != opposite_id) && (state.positions[5] != opposite_id) && (state.positions[8]  != opposite_id)) {WINNING++;}
+    if((state.positions[0] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[8]  != opposite_id)) {WINNING++;}
+    if((state.positions[2] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[6]  != opposite_id)) {WINNING++;}
+
+    if(state.positions[0] != player_id && (state.positions[1] != player_id) && (state.positions[2]  != player_id)) {LOSING++;} 
+    if((state.positions[0] != player_id) && (state.positions[3] != player_id) && (state.positions[6]  != player_id)) {LOSING++;}
+    if((state.positions[3] != player_id) && (state.positions[4] != player_id) && (state.positions[5]  != player_id)) {LOSING++;}
+    if((state.positions[6] != player_id) && (state.positions[7] != player_id) && (state.positions[8]  != player_id)) {LOSING++;}
+    if((state.positions[1] != player_id) && (state.positions[4] != player_id) && (state.positions[7]  != player_id)) {LOSING++;}
+    if((state.positions[2] != player_id) && (state.positions[5] != player_id) && (state.positions[8]  != player_id)) {LOSING++;}
+    if((state.positions[0] != player_id) && (state.positions[4] != player_id) && (state.positions[8]  != player_id)) {LOSING++;}
+    if((state.positions[2] != player_id) && (state.positions[4] != player_id) && (state.positions[6]  != player_id)) {LOSING++;}
+
+    VALUE = WINNING - LOSING; // SEE SLIDES FOR EXAMPLE
+    return VALUE;
 }
