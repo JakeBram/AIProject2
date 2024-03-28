@@ -4,9 +4,9 @@
 #include <cstdlib>
 #include <stack>
 #include <list>
-#include "board.h"
-#include "minimax.h"
-#include "movegen.h"
+#include "hfiles/board.h"
+#include "hfiles/minimax.h"
+#include "hfiles/movegen.h"
 using namespace std;
 
 board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move

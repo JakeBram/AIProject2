@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <stack>
 #include <list>
-#include "board.h"
-#include "deep_enough.h"
+#include "hfiles/board.h"
+#include "hfiles/deep_enough.h"
 
 bool DEEP_ENOUGH(board state, int depth){
     int i = 0;

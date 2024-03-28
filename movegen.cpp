@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <stack>
 #include <list>
-#include "board.h"
-#include "movegen.h"
+#include "hfiles/board.h"
+#include "hfiles/movegen.h"
 using namespace std;
 
 int* MOVEGEN(board state, string player){

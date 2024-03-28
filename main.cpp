@@ -4,25 +4,17 @@
 #include <cstdlib>
 #include <stack>
 #include <list>
-#include "board.h"
-#include "minimax.h"
-#include "deep_enough.h"
+
+#include "hfiles/board.h"
+#include "hfiles/minimax.h"
+#include "hfiles/deep_enough.h"
+
 using namespace std;
-
-// FUNCTION DEFINITIONS
-// -----------------------
-
-
-
-
-
 
 int EVALUATION(board position, string player); // - Return a number that represents a the goodness of players position
 // We need four EVALUATION functions. One was given in slides. We must create 3 more.
 
 string OPPOSITE_PLAYER(string this_player);
-
-// --------------------------------------
 
 // MAIN
 // -----
