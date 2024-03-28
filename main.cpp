@@ -42,15 +42,15 @@ int main(){
     }
 
     board final = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
-    //cout << "Response Board: ";
-    //for (int i = 0; i < 9; i++){
+    // cout << "Response Board: "; //
+    // for (int i = 0; i < 9; i++){
        // cout << final.positions[i] << ", ";
-    //} // TEST RESPONSE FROM MINI_MAX_A_B
+    // } // TEST RESPONSE FROM MINI_MAX_A_B
 
-    cout << "EVALUATION - blank board, MAX: " << EVALUATION(position, "MAX") << endl;
-    cout << "EVALUATION - blank board, MIN: " << EVALUATION(position, "MIN") << endl;
-    cout << "EVALUATION - response board, MAX: " << EVALUATION(final, "MAX") << endl;
-    cout << "EVALUATION - response board, MIN: " << EVALUATION(position, "MIN") << endl;
+    // cout << "EVALUATION - blank board, MAX: " << EVALUATION(position, "MAX") << endl;
+    // cout << "EVALUATION - blank board, MIN: " << EVALUATION(position, "MIN") << endl;
+    // cout << "EVALUATION - response board, MAX: " << EVALUATION(final, "MAX") << endl;
+    // cout << "EVALUATION - response board, MIN: " << EVALUATION(position, "MIN") << endl; // EVALUATION TESTING
 
     return 0;
 }
@@ -131,7 +131,7 @@ int* MOVEGEN(board state, string player){
     }
     int i = 0;
 
-    for (int idx = 0; idx < 9; idx++){
+    for (int idx = 0; idx < 9; idx++){ // GENERATE IDX'S OF OPEN SQAURES
         if(state.positions[idx] == 0){
             possible_moves[i + 1] = idx;
             i++;
@@ -139,7 +139,7 @@ int* MOVEGEN(board state, string player){
     }
     possible_moves[0] = i; // STORE MOVE COUNT AND POSSIBLE MOVE IDX'S HERE
 
-    static int possible_boards[82]; // GENERATE EACH POSSIBLE BOARD PER MOVE
+    static int possible_boards[82]; // GENERATE EACH POSSIBLE BOARD STATE PER POSSIBLE MOVE
     int possible_move_num = possible_moves[0];
     possible_boards[0] = possible_move_num;
     i = 1;
@@ -194,11 +194,11 @@ bool DEEP_ENOUGH(board state, int depth){
         }
         i++;
     }
-    if(depth == 9){
+    if(depth == 9){ // Have 9 moves been played?
         return true;
     }
 
-    if(state.positions[0] == state.positions[1] == state.positions[2]) { return true;} // Is the game won.
+    if(state.positions[0] == state.positions[1] == state.positions[2]) { return true;} // Is this a winning state?
     if(state.positions[0] == state.positions[3] == state.positions[6]) { return true;}
     if(state.positions[3] == state.positions[4] == state.positions[5]) { return true;}
     if(state.positions[6] == state.positions[7] == state.positions[8]) { return true;}
@@ -207,17 +207,17 @@ bool DEEP_ENOUGH(board state, int depth){
     if(state.positions[0] == state.positions[4] == state.positions[8]) { return true;}
     if(state.positions[2] == state.positions[4] == state.positions[6]) { return true;}
 
-    if(moves == 0){
+    if(moves == 0){ // Are there any moves available?
         return true;
     }
 
-    return false;
+    return false; // If still here, game can continute. We are not Deep Enough.
 }
 
 int EVALUATION(board state, string player){ // Implementing the given Evaluation function
     int player_id;
     int opposite_id;
-    if(player == "MAX") {
+    if(player == "MAX") { // Whose turn is it?
         player_id = 1;
         opposite_id = 2;
     }
@@ -225,10 +225,12 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
         player_id = 2;
         opposite_id = 1;
     }
+
     int VALUE = 0;
     int WINNING = 0;
     int LOSING = 0;
 
+    // Check lines the given player could still possibly get a win.
     if(state.positions[0] != opposite_id && state.positions[1] != opposite_id && state.positions[2]  != opposite_id) {WINNING++;} 
     if(state.positions[0] != opposite_id && state.positions[3] != opposite_id && state.positions[6]  != opposite_id) {WINNING++;}
     if((state.positions[3] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[5]  != opposite_id)) {WINNING++;}
@@ -237,7 +239,7 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
     if((state.positions[2] != opposite_id) && (state.positions[5] != opposite_id) && (state.positions[8]  != opposite_id)) {WINNING++;}
     if((state.positions[0] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[8]  != opposite_id)) {WINNING++;}
     if((state.positions[2] != opposite_id) && (state.positions[4] != opposite_id) && (state.positions[6]  != opposite_id)) {WINNING++;}
-
+    // Check lines the opposing player could still possibly get a win.
     if(state.positions[0] != player_id && (state.positions[1] != player_id) && (state.positions[2]  != player_id)) {LOSING++;} 
     if((state.positions[0] != player_id) && (state.positions[3] != player_id) && (state.positions[6]  != player_id)) {LOSING++;}
     if((state.positions[3] != player_id) && (state.positions[4] != player_id) && (state.positions[5]  != player_id)) {LOSING++;}
@@ -247,6 +249,6 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
     if((state.positions[0] != player_id) && (state.positions[4] != player_id) && (state.positions[8]  != player_id)) {LOSING++;}
     if((state.positions[2] != player_id) && (state.positions[4] != player_id) && (state.positions[6]  != player_id)) {LOSING++;}
 
-    VALUE = WINNING - LOSING; // SEE SLIDES FOR EXAMPLE
+    VALUE = WINNING - LOSING; // Evaluate the state based on possible winning lines.
     return VALUE;
 }
