@@ -59,3 +59,8 @@ int EVAL_2(board position, string player){
     int VALUE = 99;
     return VALUE;
 }
+
+int EVAL_3(board position, string player){
+    int VALUE = 99;
+    return VALUE;
+}

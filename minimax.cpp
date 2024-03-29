@@ -8,10 +8,12 @@
 #include "hfiles/minimax.h"
 #include "hfiles/movegen.h"
 #include "hfiles/opposite_player.h"
+#include "hfiles/deep_enough.h"
+#include "hfiles/evaluations.h"
 
 using namespace std;
 
-board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move
+pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move
 
     // Function Vars
     int VALUE;
@@ -23,17 +25,16 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
 
     // IMPLEMENTATION
     // --------------
-    // If deep enough, return structure
-        // VALUE = EVALUATION(position, player);
-        // PATH = null;
-
+    if(DEEP_ENOUGH(state, depth) == true){
+        VALUE = EVALUATION(state, player);
+        return make_pair(VALUE, state);
+    }
     // Else, SUCCESSORS = MOVEGEN(position, player);
     int* ptr;
     ptr = MOVEGEN(state, player);
     int idx = 0;
     int possible_moves;
     possible_moves = ptr[idx];
-    // For possible moves, create boards as arrays, set them to SUCCESSORS
     int read_in_test[82];
     int curr_sqaure = 0;
     board this_board;
@@ -42,7 +43,6 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
         this_board.positions[curr_sqaure] = ptr[i];
         if(i % 9 == 0){
             curr_sqaure = 0;
-
             SUCCESSORS.push_back(this_board);
             int this_board[9] = {0,0,0,0,0,0,0,0,0};
         }
@@ -51,26 +51,25 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
         }
     }
 
-    
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
+    if(SUCCESSORS.empty() == true) {
+        VALUE = EVALUATION(state, player);
+        return make_pair(VALUE, state);
+    }
+
     // Else, for SUCC in SUCCESSORS:
     for(const auto& SUCC : SUCCESSORS){
-        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh);
+        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh).second;
+        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh).first;
         NEW_VALUE = -VALUE;
-
         if (NEW_VALUE > pass_thresh){
             pass_thresh = NEW_VALUE;
-            BEST_PATH = SUCC;
+            BEST_PATH = RESULT_SUCC;
         }
-        if (pass_thresh >= use_thresh){
-            VALUE = pass_thresh;
-            PATH = BEST_PATH;
+        if (pass_thresh >= use_thresh) {
+            return make_pair(pass_thresh, BEST_PATH);
         }
-            
-    } // THIS SECTION NEEDS WORK
-        
+    }
 
-    VALUE = pass_thresh;
-    PATH = BEST_PATH;
-    return PATH;
+    return make_pair(pass_thresh, BEST_PATH);
 };

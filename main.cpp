@@ -22,17 +22,14 @@ int main(){
         position.positions[i] = 0;
     }
 
-    while(DEEP_ENOUGH(position, depth) == false){
-        position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN);
-        cout << player << " has played." << endl;
-        for(int j = 0; j < 9; j++){
+    position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN).second;
+    for(int j = 0; j < 9; j++){
             cout << position.positions[j] << endl;
+            if((j+1)%3==0){
+                cout <<"\n";
+            }
         }
-        depth++;
-        player = OPPOSITE_PLAYER(player);
-    }
     cout << "Game Over." << endl;
 
-    
     return 0;
 }

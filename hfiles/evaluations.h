@@ -11,3 +11,5 @@ int EVALUATION(board position, string player); // - Return a number that represe
 // We need four EVALUATION functions. One was given in slides. We must create 3 more.
 
 int EVAL_2(board position, string player);
+
+int EVAL_3(board position, string player);
