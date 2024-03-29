@@ -8,6 +8,8 @@
 #include "hfiles/board.h"
 using namespace std;
 
+// TODO: Create 4 full evaluation functions to feed the minimax search.
+
 int EVALUATION(board state, string player){ // Implementing the given Evaluation function
     int player_id;
     int opposite_id;

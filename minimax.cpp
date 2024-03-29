@@ -13,6 +13,8 @@
 
 using namespace std;
 
+// TODO: Any time this function selects a move we need to print it. This function recurses.
+
 pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move
 
     // Function Vars
