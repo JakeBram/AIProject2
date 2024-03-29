@@ -15,8 +15,10 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
 
     // Function Vars
     int VALUE;
-    string BEST_PATH;
-    string RESULT_SUCC;
+    int NEW_VALUE;
+    board PATH;
+    board BEST_PATH;
+    board RESULT_SUCC;
     // ----------------
 
     // IMPLEMENTATION
@@ -49,23 +51,26 @@ board MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pa
         }
     }
 
+    
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     // Else, for SUCC in SUCCESSORS:
-        // RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE(player), -pass_thresh, -use_thresh);
-        // NEW_VALUE = -VALUE
+    for(const auto& SUCC : SUCCESSORS){
+        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh);
+        NEW_VALUE = -VALUE;
 
-        // If NEW_VALUE > pass_thresh:
-            // pass_thresh = NEW_VALUE;
-            // BEST_PATH = SUCC in front of PATH (RESULT_SUCC)
+        if (NEW_VALUE > pass_thresh){
+            pass_thresh = NEW_VALUE;
+            BEST_PATH = SUCC;
+        }
+        if (pass_thresh >= use_thresh){
+            VALUE = pass_thresh;
+            PATH = BEST_PATH;
+        }
+            
+    } // THIS SECTION NEEDS WORK
+        
 
-        // If pass_thresh >= use_thresh:
-            // VALUE = pass_thresh;
-            // PATH = BEST_PATH;
-
-    // Return the structure
-    // VALUE = pass_thresh;
-    // PATH = BEST_PATH;
-
-    board first_child = SUCCESSORS.front();
-    return first_child; 
+    VALUE = pass_thresh;
+    PATH = BEST_PATH;
+    return PATH;
 };

@@ -13,25 +13,26 @@
 using namespace std;
 
 int main(){
-    int EVAL_MAX = 100; // THESE DEPEND ON THE EVAL FUNCTION
-    int EVAL_MIN = -100; // WE WILL USE 100 FOR NOW
+    int EVAL_MAX = 8; // THESE DEPEND ON THE EVAL FUNCTION
+    int EVAL_MIN = -8; // WE WILL USE 100 FOR NOW
+    int depth = 0;
+    string player = "MAX";
     board position; // BLANK BOARD STATE FOR NEW GAME
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
 
-    board final = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN);
-    // cout << "Response Board: "; //
-    // for (int i = 0; i < 9; i++){
-       // cout << final.positions[i] << ", ";
-    // } // TEST RESPONSE FROM MINI_MAX_A_B
+    while(DEEP_ENOUGH(position, depth) == false){
+        position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN);
+        cout << player << " has played." << endl;
+        for(int j = 0; j < 9; j++){
+            cout << position.positions[j] << endl;
+        }
+        depth++;
+        player = OPPOSITE_PLAYER(player);
+    }
+    cout << "Game Over." << endl;
 
-    cout << "EVALUATION - blank board, MAX: " << EVALUATION(position, "MAX") << endl;
-    cout << "EVALUATION - blank board, MIN: " << EVALUATION(position, "MIN") << endl;
-    cout << "EVALUATION - response board, MAX: " << EVALUATION(final, "MAX") << endl;
-    cout << "EVALUATION - response board, MIN: " << EVALUATION(position, "MIN") << endl; // EVALUATION TESTING
-    cout << "EVALUATION 2: " << EVAL_2(position, "MAX") << endl;
-
-    cout << "DEEP ENOUGH? - " << DEEP_ENOUGH(final, 1) << endl;
+    
     return 0;
 }

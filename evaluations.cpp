@@ -48,6 +48,14 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
 }
 
 int EVAL_2(board position, string player){
+    int idx = 0;
+    int board_array[3][3];
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            board_array[i][j] = position.positions[idx];
+            idx++;
+        }
+    }
     int VALUE = 99;
     return VALUE;
 }
