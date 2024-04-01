@@ -56,8 +56,6 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     return 0;
 }
 
-using namespace std;
-
 void display_board(board state) {
     char positions[9];
     string this_board;
