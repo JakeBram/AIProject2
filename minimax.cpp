@@ -19,8 +19,6 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // Function Vars
     int VALUE;
-    int METHOD = method1;
-    int otherMETHOD = method2;
     int NEW_VALUE;
     board PATH;
     board BEST_PATH;
@@ -30,7 +28,7 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
     // IMPLEMENTATION
     // --------------
     if(DEEP_ENOUGH(state, depth) == true){
-        VALUE = EVALUATION(state, player, METHOD);
+        VALUE = EVALUATION(state, player, method1);
         return make_pair(VALUE, state);
     }
     // Else, SUCCESSORS = MOVEGEN(position, player);
@@ -57,7 +55,7 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     if(SUCCESSORS.empty() == true) {
-        VALUE = EVALUATION(state, player, METHOD);
+        VALUE = EVALUATION(state, player, method1);
         return make_pair(VALUE, state);
     }
 
