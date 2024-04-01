@@ -51,7 +51,16 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     }
 
     else if(METHOD == 2){
-        return 0;
+        int VALUE = 0; // IMPLEMENT EVALUATION
+        return VALUE;
+    }
+    else if(METHOD == 3){
+        int VALUE = 0; // IMPLEMENT EVALUATION
+        return VALUE;
+    }
+    else if(METHOD == 4){
+        int VALUE = 0; // IMPLEMENT EVALUATION
+        return VALUE;
     }
     return 0;
 }
