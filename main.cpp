@@ -15,13 +15,15 @@ using namespace std;
 int main(){
     int EVAL_MAX = 8; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -8; 
+    int method1 = 1;
+    int method2 = 1;
 
     board position; // BLANK BOARD STATE FOR NEW GAME
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
 
-    position = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN).second;
+    position = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN, method1, method2).second;
     for(int j = 0; j < 9; j++){
         cout << position.positions[j] << endl;
         if((j+1)%3==0){

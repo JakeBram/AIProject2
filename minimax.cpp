@@ -15,20 +15,28 @@ using namespace std;
 
 // TODO: Any time this function selects a move we need to print it. This function recurses.
 
-pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh){ // Return the optimal move
+pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh, int method1, int method2){ // Return the optimal move
 
     // Function Vars
     int VALUE;
+    int METHOD;
     int NEW_VALUE;
     board PATH;
     board BEST_PATH;
     board RESULT_SUCC;
     // ----------------
 
+    if(player == "MAX"){
+        METHOD = method1;
+    }
+    else if(player == "MIN"){
+        METHOD = method2;
+    }
+
     // IMPLEMENTATION
     // --------------
     if(DEEP_ENOUGH(state, depth) == true){
-        VALUE = EVALUATION(state, player);
+        VALUE = EVALUATION(state, player, METHOD);
         return make_pair(VALUE, state);
     }
     // Else, SUCCESSORS = MOVEGEN(position, player);
@@ -55,14 +63,14 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     if(SUCCESSORS.empty() == true) {
-        VALUE = EVALUATION(state, player);
+        VALUE = EVALUATION(state, player, METHOD);
         return make_pair(VALUE, state);
     }
 
     // Else, for SUCC in SUCCESSORS:
     for(const auto& SUCC : SUCCESSORS){
-        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh).second;
-        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh).first;
+        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2).second;
+        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2).first;
         NEW_VALUE = -VALUE;
         if (NEW_VALUE > pass_thresh){
             pass_thresh = NEW_VALUE;
