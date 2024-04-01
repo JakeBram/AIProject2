@@ -19,19 +19,13 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // Function Vars
     int VALUE;
-    int METHOD;
+    int METHOD = method1;
+    int otherMETHOD = method2;
     int NEW_VALUE;
     board PATH;
     board BEST_PATH;
     board RESULT_SUCC;
     // ----------------
-
-    if(player == "MAX"){
-        METHOD = method1;
-    }
-    else if(player == "MIN"){
-        METHOD = method2;
-    }
 
     // IMPLEMENTATION
     // --------------
@@ -69,8 +63,8 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // Else, for SUCC in SUCCESSORS:
     for(const auto& SUCC : SUCCESSORS){
-        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2).second;
-        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2).first;
+        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method2, method1).second;
+        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method2, method1).first;
         NEW_VALUE = -VALUE;
         if (NEW_VALUE > pass_thresh){
             pass_thresh = NEW_VALUE;

@@ -51,7 +51,7 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     }
 
     else if(METHOD == 2){
-        return 99;
+        return 0;
     }
     return 0;
 }
