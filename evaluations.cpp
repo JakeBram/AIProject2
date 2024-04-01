@@ -15,10 +15,10 @@ int EVALUATION(board state, string player){ // Implementing the given Evaluation
     int opposite_id;
     if(player == "MAX") { // Whose turn is it?
         player_id = 1;
-        opposite_id = 2;
+        opposite_id = -1;
     }
     else if(player == "MIN") {
-        player_id = 2;
+        player_id = -1;
         opposite_id = 1;
     }
 

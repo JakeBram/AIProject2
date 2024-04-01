@@ -25,15 +25,16 @@ int main(){
 
     new_position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN).second;
     for(int j = 0; j < 9; j++){
-            cout << new_position.positions[j] << endl;
-            if((j+1)%3==0){
-                cout <<"\n";
-            }
+        cout << new_position.positions[j] << endl;
+        if((j+1)%3==0){
+            cout <<"\n";
         }
-    if(DEEP_ENOUGH(new_position, depth + 1) == true){
+    }
+    bool test = DEEP_ENOUGH(new_position, depth);
+    if(test == true){
         cout << "DEEP ENOUGH" << endl;
     }
-    else if(DEEP_ENOUGH(new_position, depth + 1) == false){
+    else if(test == false){
         cout << "NOT DEEP ENOUGH" << endl;
     }
     cout << "Game Over." << endl;

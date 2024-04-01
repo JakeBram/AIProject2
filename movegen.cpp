@@ -16,7 +16,7 @@ int* MOVEGEN(board state, string player){
         player_id = 1;
     }
     else {
-        player_id = 2;
+        player_id = -1;
     }
     int i = 0;
 
