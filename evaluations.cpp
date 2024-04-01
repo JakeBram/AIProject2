@@ -55,3 +55,33 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     }
     return 0;
 }
+
+using namespace std;
+
+void display_board(board state) {
+    char positions[9];
+    string this_board;
+    for(int i = 0; i < 9; i++){
+        if(state.positions[i] == 1){
+            positions[i] = 'X';
+        }
+        else if(state.positions[i] == -1){
+            positions[i] = 'O';
+        }
+        else{
+            positions[i] = '_';
+        }
+    }
+    for(int i = 0; i < 9; i++){
+        cout << positions[i];
+        if(i == 8){
+            cout << "\n\n";
+        }
+        else if((i+1)%3==0){
+            cout << "\n----------\n";
+        }
+        else {
+            cout << " | ";
+        }
+    }
+}

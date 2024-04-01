@@ -24,12 +24,7 @@ int main(){
     }
 
     position = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN, method1, method2).second;
-    for(int j = 0; j < 9; j++){
-        cout << position.positions[j] << endl;
-        if((j+1)%3==0){
-            cout <<"\n";
-        }
-    }
+    display_board(position);
     cout << "Game Over." << endl;
 
     return 0;
