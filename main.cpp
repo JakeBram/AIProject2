@@ -21,21 +21,12 @@ int main(){
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
-    board new_position;
-
-    new_position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN).second;
+    position = MINI_MAX_A_B(position, depth, player, EVAL_MAX, EVAL_MIN).second;
     for(int j = 0; j < 9; j++){
-        cout << new_position.positions[j] << endl;
+        cout << position.positions[j] << endl;
         if((j+1)%3==0){
             cout <<"\n";
         }
-    }
-    bool test = DEEP_ENOUGH(new_position, depth);
-    if(test == true){
-        cout << "DEEP ENOUGH" << endl;
-    }
-    else if(test == false){
-        cout << "NOT DEEP ENOUGH" << endl;
     }
     cout << "Game Over." << endl;
 
