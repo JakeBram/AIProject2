@@ -8,6 +8,22 @@
 #include "hfiles/board.h"
 using namespace std;
 
+const int wins[8][3] = {
+  { 0, 1, 2 },
+  { 3, 4, 5 },
+  { 6, 7, 8 },
+  { 0, 3, 6 },
+  { 1, 4, 7 },
+  { 2, 5, 8 },
+  { 0, 4, 8 },
+  { 2, 4, 6 }
+};
+const int HeuristicArr[4][4] = {
+  {     0,   -10,  -100, -1000 },
+  {    10,     0,     0,     0 },
+  {   100,     0,     0,     0 },
+  {  1000,     0,     0,     0 }
+};
 // TODO: Create 4 full evaluation functions to feed the minimax search.
 
 int EVALUATION(board state, string player, int METHOD){ // Implementing the given Evaluation function
@@ -51,7 +67,23 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     }
 
     else if(METHOD == 2){
-        int VALUE = 0; // IMPLEMENT EVALUATION
+        int VALUE = 0; 
+        for (int i = 0; i < 8; i++)  {
+            int players = 0;
+            int others = 0;
+            for (int j = 0; j < 3; j++)  {
+                int seed = state.positions[wins[i][j]];
+                if(player == "MAX" && seed == 1)
+                    players++;
+                else
+                    others++;
+                if(player == "MIN" && seed == -1)
+                    players++;
+                else
+                    others++;
+            }
+            VALUE += HeuristicArr[players][others];
+        }
         return VALUE;
     }
     else if(METHOD == 3){
