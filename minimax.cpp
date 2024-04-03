@@ -61,7 +61,7 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
 
     // Else, for SUCC in SUCCESSORS:
     for(const auto& SUCC : SUCCESSORS){
-        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method2, method1).second;
+        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method2, method1 /*otherMin, otherMax*/).second;
         VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method2, method1).first;
         NEW_VALUE = -VALUE;
         if (NEW_VALUE > pass_thresh){
@@ -72,6 +72,6 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
             return make_pair(pass_thresh, BEST_PATH);
         }
     }
-
+    // fout << display_board(RESULT_SUCC)
     return make_pair(pass_thresh, BEST_PATH);
 };
