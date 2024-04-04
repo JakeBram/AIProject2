@@ -16,7 +16,8 @@ int main(){
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
     int method1 = 1;
-    int method2 = 2;
+    int method2 = 1;
+    string player = "MAX";
 
     int otherMax = 12000; // for method 2
     int otherMin = -12000;
@@ -25,10 +26,15 @@ int main(){
         position.positions[i] = 0;
     }
 
-    position = MINI_MAX_A_B(position, 0, "MAX", EVAL_MAX, EVAL_MIN, method1, method2).second;
+    position = MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2).second;
     cout << "\n";
     display_board(position);
-    cout << "Game Over." << endl;
+    for(int i = 1; i < 9; i++){
+        position = MINI_MAX_A_B(position, 0, OPPOSITE_PLAYER(player), EVAL_MAX, EVAL_MIN, method1, method2).second;
+        cout << "\n";
+        display_board(position);
+        player = OPPOSITE_PLAYER(player);
+    }
 
     return 0;
 }

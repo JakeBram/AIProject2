@@ -10,7 +10,7 @@
 
 bool DEEP_ENOUGH(board state, int depth){
 
-    if(depth == 9){ // Have 9 moves been played?
+    if(depth == 2){ // Have 2 ply been generated?
         return true;
     }
     if(state.positions[4] != 0){
@@ -43,6 +43,13 @@ bool DEEP_ENOUGH(board state, int depth){
             return true;
         }
     }
+    int i = 0;
+    while(i < 9){
+        if(state.positions[i] == 0){
+            return false;
+        }
+        i++;
+    }
 
-    return false; // If still here, game can continute. We are not Deep Enough.
+    return true; // 
 }
