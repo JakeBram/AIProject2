@@ -68,10 +68,11 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
 
     else if(METHOD == 2){
         int VALUE = 0; 
-        for (int i = 0; i < 8; i++)  {
+        int i,j=0;
+        for (i = 0; i < 8; i++)  {
             int players = 0;
             int others = 0;
-            for (int j = 0; j < 3; j++)  {
+            for (j = 0; j < 3; j++)  {
                 int seed = state.positions[wins[i][j]];
                 if(player == "MAX" && seed == 1)
                     players++;
