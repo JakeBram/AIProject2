@@ -10,7 +10,7 @@
 
 bool DEEP_ENOUGH(board state, int depth){
 
-    if(depth == 2){ // Have 2 ply been generated?
+    if(depth == 1){ // Have 2 ply been generated?
         return true;
     }
     if(state.positions[4] != 0){

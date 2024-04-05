@@ -25,15 +25,13 @@ int main(){
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
     }
-
-    position = MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2).second;
-    cout << "\n";
-    display_board(position);
-    for(int i = 1; i < 9; i++){
-        position = MINI_MAX_A_B(position, 0, OPPOSITE_PLAYER(player), EVAL_MAX, EVAL_MIN, method1, method2).second;
+    bool game_over = DEEP_ENOUGH(position, 0);
+    while(game_over == false){
+        position = MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2).second;
         cout << "\n";
         display_board(position);
         player = OPPOSITE_PLAYER(player);
+        game_over = DEEP_ENOUGH(position, 0);
     }
 
     return 0;
