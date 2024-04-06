@@ -76,11 +76,11 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
                 int seed = state.positions[wins[i][j]];
                 if(player == "MAX" && seed == 1)
                     players++;
-                else
+                else if(player == "MAX" && seed == -1)
                     others++;
                 if(player == "MIN" && seed == -1)
                     players++;
-                else
+                else if (player == "MIN" && seed == 1)
                     others++;
             }
             VALUE += HeuristicArr[players][others];
