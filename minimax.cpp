@@ -10,7 +10,6 @@
 #include "hfiles/opposite_player.h"
 #include "hfiles/deep_enough.h"
 #include "hfiles/evaluations.h"
-
 using namespace std;
 
 // TODO: Any time this function selects a move we need to print it. This function recurses.
