@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <list>
+#include <chrono>
 
 #include "hfiles/board.h"
 #include "hfiles/minimax.h"
@@ -13,6 +14,7 @@
 using namespace std;
 
 int main(){
+    auto start = chrono::high_resolution_clock::now();
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
     int method1 = 2;
@@ -39,6 +41,10 @@ int main(){
 
         game_over = DEEP_ENOUGH(position, 0);
     }
+
+    auto end = chrono::high_resolution_clock::now();
+    double execution_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+    cout << "Execution Time: " << execution_time << " nanoseconds.\n";
 
     return 0;
 }
