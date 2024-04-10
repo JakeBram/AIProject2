@@ -15,8 +15,9 @@ using namespace std;
 int main(){
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
-    int method1 = 1;
+    int method1 = 2;
     int method2 = 1;
+    int temp = 0;
     string player = "MAX";
 
     int otherMax = 12000; // for method 2
@@ -32,6 +33,9 @@ int main(){
         display_board(position);
         player = OPPOSITE_PLAYER(player);
         game_over = DEEP_ENOUGH(position, 0);
+        temp = method1;
+        method1 = method2;
+        method2 = temp;
     }
 
     return 0;
