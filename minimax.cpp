@@ -72,6 +72,6 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
             return make_pair(pass_thresh, BEST_PATH);
         }
     }
-    // fout << display_board(RESULT_SUCC)
+
     return make_pair(pass_thresh, BEST_PATH);
 };
