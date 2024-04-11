@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <list>
 #include <chrono>
-#include<sys/resource.h>
 
 #include "hfiles/board.h"
 #include "hfiles/minimax.h"
@@ -15,8 +14,6 @@
 using namespace std;
 
 int main(){
-    struct rusage usage;
-
     auto start = chrono::high_resolution_clock::now();
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
@@ -45,15 +42,10 @@ int main(){
 
         game_over = DEEP_ENOUGH(position, 0);
     }
-    getrusage(RUSAGE_SELF, &usage);
-    int memory = usage.ru_maxrss;
     auto end = chrono::high_resolution_clock::now();
     double execution_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
     cout << "Execution Time: " << execution_time / (1 * 10^6) << " milliseconds.\n";
-    cout << "Memory Used: " << memory << " KB.\n";
     cout << "Expanded Nodes: " << expanded << "\n\n";
-
-    
 
     return 0;
 }
