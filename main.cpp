@@ -46,7 +46,7 @@ int main(){
     auto end = chrono::high_resolution_clock::now();
     double execution_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
     cout << "Execution Time: " << execution_time / (1 * 10^6) << " milliseconds.\n";
-    cout << "Expanded Nodes: " << expanded << "\n";
+    cout << "Expanded Nodes: " << expanded << "\n\n";
 
     return 0;
 }
