@@ -88,10 +88,12 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
         }
         return VALUE;
     }
+
     else if(METHOD == 3){
-        int VALUE = 0; // IMPLEMENT EVALUATION
+        int VALUE = 0;
         return VALUE;
     }
+
     else if(METHOD == 4){
         int VALUE = 0; // IMPLEMENT EVALUATION
         return VALUE;
@@ -101,7 +103,7 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
 
 void display_board(board state) {
     char positions[9];
-    string this_board;
+    string this_boardoard;
     for(int i = 0; i < 9; i++){
         if(state.positions[i] == 1){
             positions[i] = 'X';
