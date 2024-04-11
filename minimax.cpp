@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <list>
+#include <tuple>
 
 #include "hfiles/board.h"
 #include "hfiles/minimax.h"
@@ -15,7 +16,7 @@ using namespace std;
 
 // TODO: Any time this function selects a move we need to print it. This function recurses.
 
-pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh, int method1, int method2){ // Return the optimal move
+tuple<int, board, int> MINI_MAX_A_B(board state, int depth, string player, int use_thresh, int pass_thresh, int method1, int method2, int expanded){ // Return the optimal move
 
     // Function Vars
     int VALUE;
@@ -29,7 +30,7 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
     // --------------
     if(DEEP_ENOUGH(state, depth) == true){
         VALUE = EVALUATION(state, player, method1);
-        return make_pair(VALUE, state);
+        return make_tuple(VALUE, state, expanded);
     }
     // Else, SUCCESSORS = MOVEGEN(position, player);
     int* ptr;
@@ -56,22 +57,23 @@ pair<int, board> MINI_MAX_A_B(board state, int depth, string player, int use_thr
     // If SUCCESSORS.isempty(), no moves can be made, return structure as above
     if(SUCCESSORS.empty() == true) {
         VALUE = EVALUATION(state, player, method1);
-        return make_pair(VALUE, state);
+        return make_tuple(VALUE, state, expanded);
     }
 
     // Else, for SUCC in SUCCESSORS:
     for(const auto& SUCC : SUCCESSORS){
-        RESULT_SUCC = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2 /*otherMin, otherMax*/).second;
-        VALUE = MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2).first;
+        RESULT_SUCC = get<1>(MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2, expanded));
+        VALUE = get<0>(MINI_MAX_A_B(SUCC, depth + 1, OPPOSITE_PLAYER(player), -pass_thresh, -use_thresh, method1, method2, expanded));
+        expanded += 1;
         NEW_VALUE = -VALUE;
         if (NEW_VALUE > pass_thresh){
             pass_thresh = NEW_VALUE;
             BEST_PATH = SUCC;
         }
         if (pass_thresh >= use_thresh) {
-            return make_pair(pass_thresh, BEST_PATH);
+            return make_tuple(pass_thresh, BEST_PATH, expanded);
         }
     }
 
-    return make_pair(pass_thresh, BEST_PATH);
+    return make_tuple(pass_thresh, BEST_PATH, expanded);
 };

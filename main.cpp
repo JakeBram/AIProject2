@@ -17,9 +17,10 @@ int main(){
     auto start = chrono::high_resolution_clock::now();
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
-    int method1 = 2;
-    int method2 = 1;
+    int method1 = 1;
+    int method2 = 2;
     int temp = 0;
+    int expanded = 0;
     string player = "MAX";
 
     board position; // BLANK BOARD STATE FOR NEW GAME
@@ -29,8 +30,8 @@ int main(){
     
     bool game_over = DEEP_ENOUGH(position, 0);
     while(game_over == false){
-        position = MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2).second;
-
+        position = get<1>(MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2, expanded));
+        expanded = get<2>(MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2, expanded));
         cout << "\n";
         display_board(position);
 
@@ -44,7 +45,8 @@ int main(){
 
     auto end = chrono::high_resolution_clock::now();
     double execution_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Execution Time: " << execution_time << " nanoseconds.\n";
+    cout << "Execution Time: " << execution_time / (1 * 10^6) << " milliseconds.\n";
+    cout << "Expanded Nodes: " << expanded << "\n";
 
     return 0;
 }
