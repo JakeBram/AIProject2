@@ -91,6 +91,15 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
 
     else if(METHOD == 3){
         int VALUE = 0;
+      // Center control
+        if (state.positions[4] == player_id) VALUE += 3;  // Center is typically index 4
+
+        // Corner control
+        int corners[4] = {0, 2, 6, 8};  // Indexes of the corners
+        for (int i = 0; i < 4; i++) {
+            if (state.positions[corners[i]] == player_id) VALUE += 2;  // Player controls the corner
+            else if (state.positions[corners[i]] == 0) VALUE += 1;    // Corner is empty
+        }
         return VALUE;
     }
 
