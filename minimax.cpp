@@ -68,7 +68,7 @@ tuple<int, board, int> MINI_MAX_A_B(board state, int depth, string player, int u
         NEW_VALUE = -VALUE;
         if (NEW_VALUE > pass_thresh){
             pass_thresh = NEW_VALUE;
-            BEST_PATH = SUCC;
+            BEST_PATH = RESULT_SUCC;
         }
         if (pass_thresh >= use_thresh) {
             return make_tuple(pass_thresh, BEST_PATH, expanded);

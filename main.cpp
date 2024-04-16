@@ -17,8 +17,8 @@ int main(){
     auto start = chrono::high_resolution_clock::now();
     int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
     int EVAL_MIN = -12000; 
-    int method1 = 3;
-    int method2 = 2;
+    int method1 = 1;
+    int method2 = 4;
     int temp = 0;
     int expanded = 0;
     string player = "MAX";

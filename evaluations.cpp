@@ -108,7 +108,50 @@ int EVALUATION(board state, string player, int METHOD){ // Implementing the give
     }
 
     else if(METHOD == 4){
-        int VALUE = 0; // IMPLEMENT EVALUATION
+        int VALUE = 0; 
+        if(state.positions[4] == player_id) { // Center Control
+            VALUE += 5;
+        }
+        else if(state.positions[4] == opposite_id) {
+            VALUE -= 5;
+        }
+        int corners[4] = {0,2,6,8}; // Corner Control
+        for (int i = 0; i < 4; i++) {
+            if(state.positions[corners[i]] == player_id){
+                VALUE += 3;
+            }
+            else if(state.positions[corners[i]] == opposite_id){
+                VALUE -= 3;
+            }
+        }
+        int mids[4] = {1,3,5,7}; // Remaining Squares
+        for (int i = 0; i < 4; i++) {
+            if(state.positions[mids[i]] == player_id){
+                VALUE += 1;
+            }
+            else if(state.positions[mids[i]] == opposite_id){
+                VALUE -= 1;
+            }
+        }
+
+        int i,j=0;
+        for (i = 0; i < 8; i++)  {
+            int players = 0;
+            int others = 0;
+            for (j = 0; j < 3; j++)  {
+                int seed = state.positions[wins[i][j]];
+                if(player == "MAX" && seed == 1)
+                    players++;
+                else if(player == "MAX" && seed == -1)
+                    others++;
+                if(player == "MIN" && seed == -1)
+                    players++;
+                else if (player == "MIN" && seed == 1)
+                    others++;
+            }
+            VALUE += HeuristicArr[players][others];
+        }
+
         return VALUE;
     }
     return 0;
