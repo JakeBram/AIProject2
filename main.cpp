@@ -14,15 +14,34 @@
 using namespace std;
 
 int main(){
-    auto start = chrono::high_resolution_clock::now();
-    int EVAL_MAX = 12000; // THESE DEPEND ON THE EVAL FUNCTION
-    int EVAL_MIN = -12000; 
-    int method1 = 1;
-    int method2 = 4;
+    int EVAL_MAX = 120000; // THESE DEPEND ON THE EVAL FUNCTION
+    int EVAL_MIN = -120000; 
+    int method1 = 0;
+    int method2 = 0;
+    string input = "0";
     int temp = 0;
     int expanded = 0;
     string player = "MAX";
 
+    cout << "Select Evaluation Method for Xs (1-4): ";
+    cin >> input;
+    while((input != "1") && (input != "2") && (input != "3") && (input != "4")) {
+        cout << "Invalid Input. Please enter a number 1 through 4 for Xs: ";
+        cin >> input;
+    }
+    method1 = stoi(input);
+    cout << "Select Evaluation Method for Os (1-4): ";
+    cin >> input;
+    while((input != "1") && (input != "2") && (input != "3") && (input != "4")) {
+        cout << "Invalid Input. Please enter a number 1 through 4 for Os: ";
+        cin >> input;
+    }
+    method2 = stoi(input);
+    cout << "You have selected evaluation function " << method1 << " for Xs.\n";
+    cout << "You have selected evaluation function " << method2 << " for Os\n";
+
+    auto start = chrono::high_resolution_clock::now(); // Start clock
+    
     board position; // BLANK BOARD STATE FOR NEW GAME
     for(int i = 0; i < 9; i++){
         position.positions[i] = 0;
