@@ -47,10 +47,12 @@ int main(){
         position.positions[i] = 0;
     }
     
+    int moves_left = 9;
     bool game_over = DEEP_ENOUGH(position, 0);
     while(game_over == false){
         position = get<1>(MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2, expanded));
-        expanded = get<2>(MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2, expanded));
+        // expanded = get<2>(MINI_MAX_A_B(position, 0, player, EVAL_MAX, EVAL_MIN, method1, method2, expanded));
+        expanded = expanded + (moves_left*(moves_left-1));
         cout << "\n";
         display_board(position);
 
